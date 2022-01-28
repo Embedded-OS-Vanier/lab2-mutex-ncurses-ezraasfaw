@@ -1,11 +1,8 @@
-﻿  ncurses_init.c
-C:\serge\Vanier\courses\247-607-VA_Computerized Systems Optimization\projects\visual_studio\threading_stu\pdcurses_test\include\curses.h(160,1): warning C4005: 'MOUSE_MOVED': macro redefinition
+﻿  mainlab3.c
+C:\Users\EEEFL_DESKTOP\source\repos\Semester 6\Lab 3\pdcurses_test\include\curses.h(160,1): warning C4005: 'MOUSE_MOVED': macro redefinition
 C:\Program Files (x86)\Windows Kits\10\Include\10.0.18362.0\um\wincontypes.h(103): message : see previous definition of 'MOUSE_MOVED'
-  main.c
-C:\serge\Vanier\courses\247-607-VA_Computerized Systems Optimization\projects\visual_studio\threading_stu\pdcurses_test\include\curses.h(160,1): warning C4005: 'MOUSE_MOVED': macro redefinition
-C:\Program Files (x86)\Windows Kits\10\Include\10.0.18362.0\um\wincontypes.h(103): message : see previous definition of 'MOUSE_MOVED'
-  .NETFramework,Version=v4.0.AssemblyAttributes.cpp
-  Generating Code...
   ncurses_init.obj : /DEBUG:FASTLINK is not supported when managed code is present; restarting link with /DEBUG:FULL
   ncurses_init.obj : MSIL module encountered; incremental linking is disabled for MSIL; performing full link
-  pdcurses_test.vcxproj -> C:\serge\Vanier\courses\247-607-VA_Computerized Systems Optimization\projects\visual_studio\threading_stu\Debug\pdcurses_test.exe
+mainlab3.obj : warning LNK4248: unresolved typeref token (01000018) for 'pthread_mutex_t_'; image may not run
+mainlab3.obj : warning LNK4248: unresolved typeref token (01000019) for 'pthread_attr_t_'; image may not run
+  pdcurses_test.vcxproj -> C:\Users\EEEFL_DESKTOP\source\repos\Semester 6\Lab 3\Debug\pdcurses_test.exe

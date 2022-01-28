@@ -1,8 +1,8 @@
 /****************************************************************************
-* 
+*
 *
 *	Author				Date			Version
-*				
+*	Ezra-Fikru Asfaw
 *****************************************************************************/
 
 
@@ -12,8 +12,8 @@
 #include <unistd.h>
 #include <ncurses.h>
 #include <sys/ioctl.h>
- //#include <sys/time.h>
- //#include <libgen.h>
+//#include <sys/time.h>
+//#include <libgen.h>
 #endif
 
 #include "../header/public.h"
@@ -32,10 +32,24 @@
 #endif
 #include <pthread.h>
 
+/*Globals*/
+static int x = 0;
+static void* thread_display(void* threadid);
+static pthread_t thread2;
+static pthread_mutex_t mutex_print = PTHREAD_MUTEX_INITIALIZER;
 
-int main(void){
-	/* Create and start your threads here */ 
-	return 1;
-	
-}  
-  
+void print(int row, int col, char* str) {
+
+    pthread_mutex_lock(&mutex_print);
+    mvprintw(row, col, str);  // this resource is protected by a mutex
+    pthread_mutex_unlock(&mutex_print);
+
+}
+
+void create_thread_display(void) {
+    pthread_create(&thread2, NULL, thread_display, NULL);
+}
+
+void pthread_join_display(void) {
+    pthread_join(thread2, NULL);
+}
