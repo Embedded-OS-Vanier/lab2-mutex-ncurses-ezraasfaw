@@ -35,6 +35,7 @@
 /*Globals*/
 static int x = 0;
 static int y = 0;
+static void* thread_kd(void* threadid);
 static pthread_t thread1;
 static pthread_mutex_t mutex_xy = PTHREAD_MUTEX_INITIALIZER;
 static pthread_mutex_t mutex_print = PTHREAD_MUTEX_INITIALIZER;

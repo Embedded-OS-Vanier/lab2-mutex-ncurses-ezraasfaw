@@ -41,9 +41,9 @@ int main(void){
 
 
         create_thread_kb(&thread1id, NULL, thread1, NULL);
-        create_thread_display(&thread1id, NULL, thread2, NULL);
-        pthread_join_kb(thread1id, NULL);
-        pthread_join_display(thread2id, NULL);
+        //create_thread_display(&thread1id, NULL, thread2, NULL);
+        //pthread_join_kb(thread2id, NULL);
+       // pthread_join_display(thread2id, NULL);
 
         return 1;
 
