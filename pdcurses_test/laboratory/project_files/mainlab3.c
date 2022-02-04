@@ -18,6 +18,7 @@
 
 #include "../header/public.h"
 #include "../header/ncurses_init.h"
+//#include "C:/Users/1934089/source/repos/lab2-mutex-ncurses-ezraasfaw/pdcurses_test/laboratory/header/public.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -40,10 +41,10 @@ int main(void){
         pthread_t thread1id, thread2id;
 
 
-        create_thread_kb(&thread1id, NULL, thread1, NULL);
-        //create_thread_display(&thread1id, NULL, thread2, NULL);
-        //pthread_join_kb(thread2id, NULL);
-       // pthread_join_display(thread2id, NULL);
+        create_thread_kb();
+        create_thread_display();
+        pthread_join_kb();
+        pthread_join_display();
 
         return 1;
 

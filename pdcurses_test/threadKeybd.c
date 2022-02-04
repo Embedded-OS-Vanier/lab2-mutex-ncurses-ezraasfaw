@@ -16,8 +16,8 @@
 //#include <libgen.h>
 #endif
 
-#include "../header/public.h"
-#include "../header/ncurses_init.h"
+#include "../laboratory/header/public.h"
+#include "../laboratory/header/ncurses_init.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -38,15 +38,8 @@ static int y = 0;
 static void* thread_kd(void* threadid);
 static pthread_t thread1;
 static pthread_mutex_t mutex_xy = PTHREAD_MUTEX_INITIALIZER;
-static pthread_mutex_t mutex_print = PTHREAD_MUTEX_INITIALIZER;
 
-//void print(int row, int col, char* str) {
-//
-//    pthread_mutex_lock(&mutex_print);
-//    mvprintw(row, col, str);  // this resource is protected by a mutex
-//    pthread_mutex_unlock(&mutex_print);
-//
-//}
+
 
 void create_thread_kb(void) {
     pthread_create(&thread1, NULL, thread_kd, NULL);
@@ -57,14 +50,16 @@ void pthread_join_kb(void) {
 }
 
 void* thread_kd(void* threadid) {
-    int temp_x = 0,
-        input;
+    int temp_x = 0, temp_y = 0, input;
     while (1) {
         input = getch();  // blocking queue 
         temp_x = get_x();
-        if (input == 'u') set_x(++temp_x); // increments x
-        else if (input == 'd') set_x(--temp_x); // decrements x
-        else if (input == 'x') break;
+        temp_y = get_y();
+        if (input == 's') set_x(++temp_x); // increments x
+        else if (input == 'w') set_x(--temp_x); // decrements x
+        else if (input == 'd') set_y(++temp_y); // increments y
+        else if (input == 'a') set_y(--temp_y); // decrements y
+        else if (input == 'x') exit(1);
     }
     return NULL;
 
@@ -76,11 +71,11 @@ void set_x(int _x) {
 }
 
 int get_x(void) {
-    int temp;
+    int Xtemp;
     pthread_mutex_lock(&mutex_xy);
-    temp = x;// protected global variable
+    Xtemp = x;// protected global variable
     pthread_mutex_unlock(&mutex_xy);
-    return temp;
+    return Xtemp;
 }
 
 void set_y(int _y) {
@@ -90,9 +85,9 @@ void set_y(int _y) {
 }
 
 int get_y(void) {
-    int temp;
+    int Ytemp;
     pthread_mutex_lock(&mutex_xy);
-    temp = y;// protected global variable
+    Ytemp = y;// protected global variable
     pthread_mutex_unlock(&mutex_xy);
-    return temp;
+    return Ytemp;
 }
