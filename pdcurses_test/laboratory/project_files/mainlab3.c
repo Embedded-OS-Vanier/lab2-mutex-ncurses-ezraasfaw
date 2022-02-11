@@ -36,11 +36,8 @@
 
 
 int main(void){
-    init_ncurses();
-    
-        pthread_t thread1id, thread2id;
-
-
+        
+        init_ncurses();
         create_thread_kb();
         create_thread_display();
         pthread_join_kb();

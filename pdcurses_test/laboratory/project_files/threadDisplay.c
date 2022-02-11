@@ -2,7 +2,14 @@
 *
 *
 *	Author				Date			Version
-*	Ezra-Fikru Asfaw
+*   Ezra-Fikru Asfaw    1/28/2022        1.0      Worked and completed the menu
+* 
+*	Ezra-Fikru Asfaw    2/04/2022        2.0      Worked and completed snake 
+*                                                 mouvement
+*                                                  
+*	Ezra-Fikru Asfaw    2/11/2022        3.0      Completed threadDisplay.c
+*                                                 Worked on the counter, and
+*                                                 blinking the title of the game.
 *****************************************************************************/
 
 
@@ -16,8 +23,8 @@
 //#include <libgen.h>
 #endif
 
-#include "../header/public.h"
-#include "../header/ncurses_init.h"
+#include "../laboratory/header/public.h"
+#include "../laboratory/header/ncurses_init.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -48,43 +55,53 @@ void print(int row, int col, char* str) {
 
 void* thread_display(void* threadid) {
     int timer = 0;
+    int cnt = 0;
+    int cnt2 = 0;
+
+    //static menu section
     attron(BLUE_WHITE);
     mvprintw(0, 0,"////////////////////////////////////////////////////////////////////////////" );
-    mvprintw(1, 0,"//                               Controls                                 //");
-    mvprintw(1, 0,"//                             Forward(W)                                 //");
-    mvprintw(2, 0,"//            Left(L)          Backward(B)         Right()                //");
-    mvprintw(3, 0,"//                               Exit(X)                                  //");
-    
-   
-    while(1){ 
-        mvprintw(4, 0,"//                          Count: %d                                 //", timer);
-        mvprintw(5, 0,"////////////////////////////////////////////////////////////////////////////");
+    mvprintw(1, 0,"                                 Controls                                   ");
+    mvprintw(1, 0,"                               Forward(W)                                   ");
+    mvprintw(2, 0,"              Left(L)          Backward(B)         Right(R)                 ");
+    mvprintw(3, 0,"                                 Exit(X)                                    ");
+    mvprintw(6, 0, "////////////////////////////////////////////////////////////////////////////");
+    attroff(BLUE_WHITE);
 
-        
-        if (get_x() < 6){
-            print(6, get_y(), "O");
-            //Sleep(10000);
+    while (1) {
+        //non static menu section
+        attron(BLUE_WHITE);
+        mvprintw(5, 0, "                                                       Count: %d             ", timer);
+        attroff(BLUE_WHITE);
+
+        //displaying snake
+        attron(GREEN_WHITE);
+        print(get_x(), get_y(), "O");
+        attroff(GREEN_WHITE);
+
+        //counter 
+        Sleep(10);
+        if (cnt++ == 100) {
+            timer++;
+            cnt = 0;
+
         }
-        else if(get_y() <= 0) {
-            print(get_x(), 0, "O");
+        //title of the game blink
+        if (cnt2++ == 20) {                                                                                     
+            attron(RED_WHITE);
+            mvprintw(4, 0, "                               Snake Game                                   ");
+            attroff(RED_WHITE);
         }
-       /* else if (get_y() >= 20) {
-            print(get_x(), 20, "O");
+        if (cnt2 == 40) {
+            attron(RED_WHITE);
+            mvprintw(4, 0, "                                                                            ");
+            attroff(RED_WHITE);
+            cnt2 = 0;
         }
-        else if (get_x() >= 20) {
-            print(20, get_y(), "O");
-        }*/
-        else {
-            print(get_x(), get_y(), "O");
-            //Sleep(1000);
-            
-        }
-        /*timer++;
-        Sleep(100);
-        refresh;*/
-       
+
+        refresh();
+
     }
-    
     return NULL;
 }
 

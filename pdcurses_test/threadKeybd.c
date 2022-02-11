@@ -2,7 +2,15 @@
 *
 *
 *	Author				Date			Version
-*	Ezra-Fikru Asfaw
+*   Ezra-Fikru Asfaw    1/28/2022        1.0      Worked and completed the ability.
+*                                                 to retive the key input to move the 
+*                                                 snake.
+*
+*	Ezra-Fikru Asfaw    2/04/2022        2.0      Worked and completed the ability to send
+*                                                 the keyboard input to threadKeybd.c.
+*
+*	Ezra-Fikru Asfaw    2/11/2022        3.0      Completed threadKeybd.c
+*                                                 Worked and completed the borders.
 *****************************************************************************/
 
 
@@ -33,7 +41,7 @@
 #include <pthread.h>
 
 /*Globals*/
-static int x = 0;
+static int x = 7;
 static int y = 0;
 static void* thread_kd(void* threadid);
 static pthread_t thread1;
@@ -41,18 +49,13 @@ static pthread_mutex_t mutex_xy = PTHREAD_MUTEX_INITIALIZER;
 
 
 
-void create_thread_kb(void) {
-    pthread_create(&thread1, NULL, thread_kd, NULL);
-}
 
-void pthread_join_kb(void) {
-    pthread_join(thread1, NULL);
-}
 
-void* thread_kd(void* threadid) {
+void* thread_kd(void* threadid) {     //retive keyboard input
     int temp_x = 0, temp_y = 0, input;
     while (1) {
         input = getch();  // blocking queue 
+        Sleep(20);
         temp_x = get_x();
         temp_y = get_y();
         if (input == 's') set_x(++temp_x); // increments x
@@ -64,13 +67,19 @@ void* thread_kd(void* threadid) {
     return NULL;
 
 }
-void set_x(int _x) {
+void set_x(int _x) { 
     pthread_mutex_lock(&mutex_xy);
     x = _x;// protected global variable
+    if (x < 7) {    //x axis starting borders
+        x = 7;
+    }
+    if (x > 29) {
+        x = 29;
+    }
     pthread_mutex_unlock(&mutex_xy);
 }
 
-int get_x(void) {
+int get_x(void) {    //x axis ending borders
     int Xtemp;
     pthread_mutex_lock(&mutex_xy);
     Xtemp = x;// protected global variable
@@ -81,13 +90,28 @@ int get_x(void) {
 void set_y(int _y) {
     pthread_mutex_lock(&mutex_xy);
     y = _y;// protected global variable
+    if (y <= 0) {    //y axis starting borders
+        y = 0;
+    }
+    if (y >= 75) {
+        y = 75;
+    }
     pthread_mutex_unlock(&mutex_xy);
 }
 
-int get_y(void) {
+int get_y(void) {    //y axis ending borders
     int Ytemp;
     pthread_mutex_lock(&mutex_xy);
     Ytemp = y;// protected global variable
     pthread_mutex_unlock(&mutex_xy);
     return Ytemp;
+}
+
+
+void create_thread_kb(void) {
+    pthread_create(&thread1, NULL, thread_kd, NULL);
+}
+
+void pthread_join_kb(void) {
+    pthread_join(thread1, NULL);
 }
